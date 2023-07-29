@@ -1,4 +1,5 @@
 import csv
+from db_connection import PostgresConnection
 from flask import Flask
 from compound import Compound
 from experiment import Experiment
@@ -18,9 +19,12 @@ def etl():
 
     # Process files to derive features
     # Upload processed data into a database
+    conn = PostgresConnection()
+    conn.populate_results(user_table, compound_table)
+    conn.close_db()
     pass
 
-def parse_users(data_source):
+def parse_users(data_source: str):
     users_file = open(data_source, newline='')
     users_reader = csv.reader(users_file, delimiter=',')
     next(users_reader)
@@ -34,7 +38,7 @@ def parse_users(data_source):
             )
     return user_table
 
-def parse_experiments(data_source):
+def parse_experiments(data_source: str):
     experiments_file = open(data_source, newline='')
     experiments_reader = csv.reader(experiments_file, delimiter=',')
     next(experiments_reader)
@@ -50,7 +54,7 @@ def parse_experiments(data_source):
         )
     return experiment_list
 
-def parse_compounds(data_source):
+def parse_compounds(data_source: str):
     compound_file = open(data_source, newline='')
     compound_reader = csv.reader(compound_file, delimiter=',')
     next(compound_reader)

@@ -4,7 +4,7 @@ class Experiment:
     experiment_compound_ids: [int]
     experiment_run_time: int
 
-    def __init__(self, experiment_id, user_id, experiment_compound_ids, experiment_run_time):
+    def __init__(self, experiment_id: str, user_id: str, experiment_compound_ids: str, experiment_run_time: str):
         self.experiment_id = int(experiment_id)
         self.user_id = int(user_id)
         self.experiment_run_time = int(experiment_run_time)
