@@ -11,7 +11,7 @@ class PostgresConnection():
                             user_id INT PRIMARY KEY,
                             name VARCHAR(255),
                             email VARCHAR(255),
-                            signup_date VARCHAR(255),
+                            signup_date DATE,
                             total_experiments INT,
                             average_experiment_duration FLOAT,
                             most_common_compound VARCHAR(255)
@@ -31,7 +31,7 @@ class PostgresConnection():
                                 total_experiments,
                                 average_experiment_duration,
                                 most_common_compound) VALUES
-                                ({},'{}','{}','{}',{},{},'{}')
+                                ({},'{}','{}',TO_DATE('{}', 'YYYY-MM-DD'),{},{},'{}')
                                 ON CONFLICT (user_id) DO NOTHING;
                                 """
                                 .format(
