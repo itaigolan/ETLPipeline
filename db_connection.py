@@ -4,7 +4,8 @@ from user import User
 
 class PostgresConnection():
     def __init__(self):
-        self.conn = psycopg2.connect(host="localhost", dbname="postgres", user="postgres", password="12345", port=5432)
+        # When run on docker the host is postgres
+        self.conn = psycopg2.connect(host="postgres", dbname="postgres", user="postgres", password="12345", port=5432)
         self.cursor = self.conn.cursor()
         # Initialize users table
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS users(
@@ -46,6 +47,11 @@ class PostgresConnection():
                             )
 
         self.conn.commit()
+
+    def query_results(self):
+        self.cursor.execute("SELECT * FROM users")
+
+        return self.cursor.fetchall()
 
     def close_db(self):
         self.cursor.close()

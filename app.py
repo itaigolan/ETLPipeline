@@ -72,5 +72,13 @@ def trigger_etl():
     etl()
     return {"message": "ETL process started"}, 200
 
+
+@app.route("/")
+def get():
+    conn = PostgresConnection()
+    results = conn.query_results()
+    conn.close_db()
+    return results, 200
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0', port=int("5000"))
